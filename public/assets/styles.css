@@ -1,0 +1,131 @@
+:root {
+  --bg: #faf9f7;
+  --fg: #111110;
+  --muted: #6f6d68;
+  --rule: #e4e2dd;
+  --hover: #f1efeb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111110;
+    --fg: #f3f1ec;
+    --muted: #9a978f;
+    --rule: #2a2927;
+    --hover: #1b1a19;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12vh clamp(16px, 6vw, 96px) 0;
+  max-width: 72rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+h1 .light { font-weight: 300; color: var(--muted); }
+
+p {
+  margin: 2.5rem 0 0;
+  max-width: 34rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+a { color: var(--fg); }
+
+/* Link card: icon, name and one line, nothing else */
+.card {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 0.875rem 1.25rem 0.875rem 0.875rem;
+  max-width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.card:hover, .card:focus-visible { background: var(--hover); border-color: var(--muted); }
+.card img { width: 40px; height: 40px; flex: none; }
+.card strong { display: block; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
+.card small { display: block; font-size: 0.9375rem; color: var(--muted); }
+.card .arrow { margin-left: 0.5rem; color: var(--muted); transition: transform 0.2s ease; }
+.card:hover .arrow { transform: translateX(3px); }
+
+/* The glasses peek up from the bottom edge and pop up on hover */
+.peek {
+  --w: clamp(220px, 40vw, 360px);
+  height: calc(var(--w) * 0.43 + 12px);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--rule);
+}
+
+.glasses {
+  width: var(--w);
+  aspect-ratio: 1411 / 607;
+  margin-top: 12px;
+  background: var(--fg);
+  -webkit-mask: url(/assets/glasses.svg) center / contain no-repeat;
+  mask: url(/assets/glasses.svg) center / contain no-repeat;
+  transform: translateY(40%);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.peek:hover .glasses { transform: translateY(0); }
+
+/* 404: the glasses come up further and look around for the missing page */
+.peek.searching .glasses {
+  transform: translateY(22%);
+  animation: look 6s ease-in-out infinite;
+}
+
+@keyframes look {
+  0%, 12%, 100% { translate: 0 0; }
+  25%, 37% { translate: -18% 0; }
+  50% { translate: 0 0; }
+  62%, 75% { translate: 18% 0; }
+  88% { translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glasses { transition: none; }
+  .peek.searching .glasses { animation: none; }
+}
+
+footer {
+  padding: 1.25rem clamp(16px, 6vw, 96px);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: center;
+}
