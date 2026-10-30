@@ -4,6 +4,9 @@
   --muted: #6f6d68;
   --rule: #e4e2dd;
   --hover: #f1efeb;
+  /* Type scale: body 17px at 375px wide to 20px at 1280px; h1 is 2x body on mobile, 4x on desktop */
+  --body: clamp(1.0625rem, 0.985rem + 0.332vw, 1.25rem);
+  --h1: clamp(2.125rem, 0.934rem + 5.08vw, 5rem);
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -41,7 +44,7 @@ main {
 
 h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  font-size: var(--h1);
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.045em;
@@ -53,7 +56,7 @@ h1 .light { font-weight: 300; color: var(--muted); }
 p {
   margin: 2.5rem 0 0;
   max-width: 34rem;
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-size: var(--body);
   line-height: 1.55;
   color: var(--muted);
 }
@@ -76,15 +79,15 @@ a { color: var(--fg); }
 }
 .card:hover, .card:focus-visible { background: var(--hover); border-color: var(--muted); }
 .card img { width: 40px; height: 40px; flex: none; }
-.card strong { display: block; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
-.card small { display: block; font-size: 0.9375rem; color: var(--muted); }
+.card strong { display: block; font-size: var(--body); font-weight: 600; letter-spacing: -0.01em; }
+.card small { display: block; font-size: calc(var(--body) * 0.875); color: var(--muted); }
 .card .arrow { margin-left: 0.5rem; color: var(--muted); transition: transform 0.2s ease; }
 .card:hover .arrow { transform: translateX(3px); }
 
 /* The glasses peek up from the bottom edge and pop up on hover */
 .peek {
   --w: clamp(220px, 40vw, 360px);
-  height: calc(var(--w) * 0.43 + 12px);
+  height: calc(var(--w) * 0.339 + 12px);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -93,7 +96,7 @@ a { color: var(--fg); }
 
 .glasses {
   width: var(--w);
-  aspect-ratio: 1411 / 607;
+  aspect-ratio: 1980 / 670;
   margin-top: 12px;
   background: var(--fg);
   -webkit-mask: url(/assets/glasses.svg) center / contain no-repeat;
